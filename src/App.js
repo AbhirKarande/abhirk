@@ -1,68 +1,115 @@
 import React, {useState} from 'react';
-import './App.css';
-var dicePhoto;
+import Button from '@material-ui/core/Button';
+import { Typography } from 'antd';
+import { BarsOutlined, DropboxOutlined, SkypeOutlined } from '@ant-design/icons';
 
+const { Title } = Typography;
 function App() {
-  const [todos, setTodos] = useState([]);
-  function handleKeyDown(e, i) {
-    if (e.key === 'Enter') {
-      createTodoAtIndex(e, i);
-    }
-    if (e.key === 'Backspace' && todos[i].content === '') {
-      e.preventDefault();
-      return removeTodoItem(i);
-    }
-  }
-  function createTodoAtIndex(e, i) {
-    const newTodos = [...todos];
-    newTodos.splice(i + 1, 0, {
-      content: '',
-      isCompleted: false,
-    });
-    setTodos(newTodos);
-    //time out function is added so that there is a delay between todo state changes.
-    setTimeout(() => {
-      document.forms[0].elements[i + 1].focus();
-    }, 0);
-  }
-  function updateTodoItem(e, i) {
-    const newTodos = [...todos];
-    newTodos[i].content = e.target.value;
-    setTodos(newTodos);
-  }
-  function removeTodoItem(i) {
-    if (i === 0 && todos.length === 1) return;
-    setTodos(todos => todos.slice(0, i).concat(todos.slice(i + 1, todos.length)));
-    setTimeout(() => {
-      document.forms[0].elements[i - 1].focus();
-    }, 0);
-  }
-  function toggleTodoComplete(index) {
-    const temporaryTodos = [...todos];
-    temporaryTodos[index].isCompleted = !temporaryTodos[index].isCompleted;
-    setTodos(temporaryTodos);
-  }
+  const[todoList, setTodoList] = useState([]);
+  const addTodo = (value) => {
+    setTodoList([...todoList, value]);
+    console.log(todoList);
+  };
+  
+  const appStyle = {
+    display:'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    width: '100vw',
+    fontFamily: 'Arial',
+  };
   return (
-    <div className="app">
-      <div className="header">
+    <div style={ appStyle }>
+      <Title type ="danger">To Do List</Title>
+      <BarsOutlined />
+      <DropboxOutlined />
+      <SkypeOutlined />
+      <InputField addTodo = {addTodo}/>
+      <div style = {{
+        display:'flex',
+        flexDirection: 'column',
+        alightItems: 'center',
+        border: 'solid 1px lightgray',
+        borderRadius: '6px',
+        width: '40vw',
+        padding: '2rem'
+      }}>
+        {todoList.map(todo =>
+          <Todo
+            title = {todo.title}
+            description = {todo.description}
+            date = {todo.date}
+            />
+          )}
       </div>
-      <form className="todo-list">
-        <ul>
-          {todos.map((todo, i) => (
-            <div className={`todo ${todo.isCompleted && 'todo-is-completed'}`}>
-              <div className={'checkbox'} onClick={() => toggleTodoComplete(i)}>
-                {todo.isCompleted}
-              </div>
-              <input type="text" value={todo.content} onKeyDown={e => handleKeyDown(e, i)}  nChange={e => updateTodoItem(e, i)}/>
-            </div>
-          ))}
-        </ul>
-      </form>
     </div>
   );
-
 }
-
 
 export default App;
 
+function Todo({ title,description,date }){
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      borderBottom: 'solid 1px lightgray',
+      width: '40vw',
+    }}>
+      <h1>{title}</h1>
+      <h2>{description}</h2>
+      <h3>{date}</h3>
+    </div>
+  );
+}
+
+function InputField({ addTodo }) {
+  const [value, setValue] = useState({ title: "", description: "", date: ""});
+
+  const inputStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: 'solid 1px lightgray',
+    borderRadius: '6px',
+    width: '40vw',
+    padding: '2rem'
+  };
+  const handleChange = (e) => {
+    setValue({
+      ...value,
+      [e.target.id]: e.target.value
+    });
+  };
+  return (
+    <div style = { inputStyle }>
+      <input
+        style={{ borderWidth: '0', backgroundColor: 'whitesmoke', width: '15vw' }}
+        placeholder = 'Enter in a title'
+        value = { value.title }
+        onChange = {e => handleChange(e)}
+        id='title'
+        ></input>
+      <textarea
+        style={{ borderWidth: '0', backgroundColor: 'whitesmoke', width: '15vw' }}
+        placeholder='Enter in a description'
+        value = { value.description }
+        onChange = {e => handleChange(e)}
+        id='description'
+        >
+      </textarea>
+      <input
+        style={{borderWidth: '0', backgroundColor: 'whitesmoke', width: '15vw' }}
+        type='date'
+        placeholder='Enter date'
+        value = { value.date }
+        onChange = {e => handleChange(e)}
+        id='date'
+      >
+      </input>
+
+      <Button onClick={() => addTodo(value)} color = "secondary" variant = "contained">Submit</Button>
+    </div>
+  );
+}
