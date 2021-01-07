@@ -1,91 +1,26 @@
-.App {
-  text-align: center;
+body {
+  --pink-one: #f4d2c6;
+  --pink-two: #fdd3d8;
+  --light-blue: #cbe4f4;
+  --light-blue-two: #dbe9f1;
+  --med-blue-one: #bbd1df;
+  --med-blue-two: #93acc9;
+  --dark-blue: #6e8aaa;
+  --red-brown: #433a63;
+  background: linear-gradient(var(--med-blue-two), var(--med-blue-two), var(--med-blue-two), var(--med-blue-two), var(--med-blue-two), var(--med-blue-two) );
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+code {
+  font-family: 'Source Code Pro', monospace;
+  background: var(--light-blue-two);
+  padding: 2px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: rgb(47, 206, 158);
+strong {
+  color: var(--red-brown);
+  background: var(--light-blue-two)
 }
 
-.todo {
-  display: flex;
-  align-items: center;
-  margin: 1rem 0;
-}
-
-.todo-is-completed .checkbox {
-  color: #000;
-  background: rgb(172, 55, 201);
-}
-
-.todo-is-completed input {
-  text-decoration: line-through;
-}
-
-.checkbox {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color .2s ease-in-out;
-  border: 1px solid rgb(74, 177, 60);
-}
-
-.checkbox:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0);
-}
-
-.checkbox-checked {
-  color: #000;
-  background: rgb(192, 37, 37);
-}
-
-
-ul {
-  list-style: none;
-  padding: 0;
-  line-height: 2rem;
-  width: 500px;
-}
-
-input {
-  border: solid;
-  background: transparent;
-  color: rgb(0, 0, 0);
-  font-size: 1.4rem;
-  outline: none;
-  width: 100%;
-}
-
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a:hover {
+  color: var(--med-blue-two);
 }

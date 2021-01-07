@@ -1,29 +1,48 @@
-import * as React from 'react';
-import { useState } from 'react';
-import ReactMapGL from 'react-map-gl';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import './App.css';
+import Nav from './components/Nav';
+import Home from './pages/Home';
+import Footer from './components/Footer';
+import Projects from './pages/Projects';
+import ResumePage from './pages/ResumePage';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
 
 
-function App() {
-  const [viewport, setViewport] = useState({
-    width: 400,
-    height: 400,
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8
-  });
- return (
-   <ReactMapGL 
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      {...viewport}
-      onViewportChange={nextViewport => setViewport(nextViewport)}   
-      
-   >
 
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    miniHeight: '100vh',
+    height: "100%"
+  },
+  footer: {
+    padding: "2%",
+    marginTop: 'auto',
+    marginLeft: 'auto',
+  }
+})
 
-   </ReactMapGL>
- );
+export default function App() {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <Container className={classes.root}>
+        <Box my={5}>
+          <Nav />
+        </Box>
+        <Route exact path="/" component={Home} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/resume" component={ResumePage} />
+        <footer className={classes.footer}>
+          <Footer/>
+        </footer>
+      </Container>
+    </div>
+  )
 }
-
-export default App;
-    
-
